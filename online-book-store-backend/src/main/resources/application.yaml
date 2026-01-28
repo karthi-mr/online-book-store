@@ -24,3 +24,8 @@ server:
   servlet:
     context-path: /api/v1/
   port: 8088
+
+application:
+  security:
+    secret-key: 93f9941ffeb0acf0aee0ffb34e70a40d6ff54d450b34f82201fc85a4a4058c35
+    expiration: 86_400_000
