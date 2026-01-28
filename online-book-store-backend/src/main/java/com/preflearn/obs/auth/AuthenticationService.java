@@ -34,6 +34,7 @@ public class AuthenticationService {
                 .mobile(registrationRequest.mobile())
                 .password(this.passwordEncoder.encode(registrationRequest.password()))
                 .role(Role.CUSTOMER)
+                .isActive(true)
                 .build();
         this.userRepository.save(user);
     }
