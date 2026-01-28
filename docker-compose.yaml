@@ -1,0 +1,25 @@
+name: online-book-store
+services:
+  postgres:
+    container_name: postgres-obs
+    image: postgres
+    environment:
+      - POSTGRES_USERNAME=admin
+      - POSTGRES_PASSWORD=admin@321
+      - POSTGRES_DB=online_book_store
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - online-book-store-network
+    restart: unless-stopped
+
+networks:
+  online-book-store-network:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
