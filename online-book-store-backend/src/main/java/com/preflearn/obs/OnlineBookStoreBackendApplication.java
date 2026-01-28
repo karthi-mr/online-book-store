@@ -14,5 +14,4 @@ public class OnlineBookStoreBackendApplication {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Kolkata"));
         SpringApplication.run(OnlineBookStoreBackendApplication.class, args);
     }
-
 }

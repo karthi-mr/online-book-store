@@ -1,6 +1,5 @@
 package com.preflearn.obs.security;
 
-import com.preflearn.obs.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -52,15 +51,12 @@ public class JwtAuthService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        User user = (User) userDetails;
-
         return Jwts
                 .builder()
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + this.expiration))
-                .claim("fullname", user.getFirstname() + " " + user.getLastname())
                 .claim("authorities", userDetails.getAuthorities())
                 .signWith(this.getSigninKey(), HS256)
                 .compact();
