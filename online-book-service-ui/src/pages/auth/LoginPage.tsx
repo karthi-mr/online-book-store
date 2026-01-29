@@ -39,7 +39,7 @@ function LoginPage(): ReactElement {
       <div className="flex items-center justify-center min-w-lg md:min-w-xl flex-col gap-2 border
       border-gray-300 dark:border-slate-800 rounded-xl">
         {/* header */}
-        <div className="w-full border-b dark:border-slate-800">
+        <div className="w-full border-b border-gray-300 dark:border-slate-800">
           <h1 className="text-2xl md:text-4xl text-center py-4 font-bold tracking-wide">
             Welcome to Book Store
           </h1>
@@ -62,10 +62,11 @@ function LoginPage(): ReactElement {
               type="email"
               name="email"
               id="email"
+              placeholder="Enter your username"
               autoFocus
               className="border border-gray-300 dark:border-slate-800 w-full rounded-lg focus:bg-gray-200
               focus:dark:bg-slate-900/15 p-2 text-sm md:text-lg outline-none focus:ring focus:ring-gray-500
-              focus:dark:ring-slate-600"
+              focus:dark:ring-slate-600 placeholder:text-gray-400 dark:placeholder:text-slate-600"
             />
           </div>
           {/* password */}
@@ -80,16 +81,17 @@ function LoginPage(): ReactElement {
               type="password"
               name="password"
               id="password"
+              placeholder="Enter your password"
               className="border border-gray-300 dark:border-slate-800 w-full rounded-lg focus:bg-gray-200
               focus:dark:bg-slate-900/15 p-2 text-sm md:text-lg outline-none focus:ring focus:ring-gray-500
-              focus:dark:ring-slate-600"
+              focus:dark:ring-slate-600 placeholder:text-gray-400 dark:placeholder:text-slate-600"
             />
           </div>
 
           {/* login btn */}
           <button
-            className="w-full bg-blue-800 rounded-xl py-1.5 text-sm md:text-lg font-medium tracking-wide
-            text-white hover:bg-blue-700 cursor-pointer"
+            className="w-full border border-blue-700 rounded-xl py-1.5 text-sm md:text-lg font-medium tracking-wide
+            hover:text-white hover:bg-blue-700 cursor-pointer transition-colors duration-300"
           >
             Login
           </button>
