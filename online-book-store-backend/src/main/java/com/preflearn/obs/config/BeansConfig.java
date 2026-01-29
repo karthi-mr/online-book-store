@@ -1,6 +1,7 @@
 package com.preflearn.obs.config;
 
 import com.preflearn.obs.user.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -12,9 +13,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static org.springframework.http.HttpHeaders.*;
 
 @Configuration
 public class BeansConfig {
+
+    @Value("${application.frontend-url}")
+    private String frontendUrl;
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
@@ -45,5 +58,28 @@ public class BeansConfig {
     @Bean
     public AuditorAware<Long> auditorAware() {
         return new ApplicationAuditAware();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(Collections.singletonList(this.frontendUrl));
+        config.setAllowCredentials(true);
+        config.setAllowedHeaders(Arrays.asList(
+                ORIGIN,
+                CONTENT_TYPE,
+                ACCEPT,
+                AUTHORIZATION
+        ));
+        config.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+        ));
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 }
