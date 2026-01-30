@@ -20,7 +20,7 @@ import static org.springframework.http.ResponseEntity.status;
 @RequestMapping("categories")
 @RequiredArgsConstructor
 @Tag(
-        name = "categories",
+        name = "Categories",
         description = "Book Categories"
 )
 public class CategoryController {
@@ -75,7 +75,7 @@ public class CategoryController {
                 .build();
     }
 
-    @DeleteMapping("{category-id}")
+    @PatchMapping("update-active-status/{category-id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> UpdateCategoryStatus(
         @PathVariable("category-id") Long categoryId

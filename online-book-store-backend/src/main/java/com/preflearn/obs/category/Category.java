@@ -1,5 +1,7 @@
 package com.preflearn.obs.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.preflearn.obs.book.Book;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -7,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,4 +38,8 @@ public class Category {
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime lastModifiedAt;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Book> books;
 }
