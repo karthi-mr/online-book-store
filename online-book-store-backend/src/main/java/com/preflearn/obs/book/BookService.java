@@ -4,6 +4,7 @@ import com.preflearn.obs.book.dto.BookRequest;
 import com.preflearn.obs.book.dto.BookResponse;
 import com.preflearn.obs.category.Category;
 import com.preflearn.obs.common.PageResponse;
+import com.preflearn.obs.file.FileStorageService;
 import com.preflearn.obs.user.Role;
 import com.preflearn.obs.user.User;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final FileStorageService fileStorageService;
 
     public BookResponse findBookById(Long bookId) {
         return this.bookRepository.findById(bookId)
@@ -140,6 +143,16 @@ public class BookService {
         Book book = this.bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(bookId));
         book.setStockQuantity(quantity);
+        this.bookRepository.save(book);
+    }
+
+    public void uploadBookCover(MultipartFile file, Authentication authentication, Long bookId) {
+        User user = (User) authentication.getPrincipal();
+        assert user != null;
+        Book book = this.bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException(bookId));
+        String bookCover = this.fileStorageService.saveFile(file, user.getId());
+        book.setImageUrl(bookCover);
         this.bookRepository.save(book);
     }
 }
