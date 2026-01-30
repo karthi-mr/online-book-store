@@ -7,6 +7,8 @@ import com.preflearn.obs.category.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import static com.preflearn.obs.file.FileUtils.readFileFromLocation;
+
 @Component
 @RequiredArgsConstructor
 public class BookMapper {
@@ -22,7 +24,7 @@ public class BookMapper {
                 book.getDescription(),
                 book.getPrice(),
                 book.getStockQuantity(),
-                book.getImageUrl(),
+                readFileFromLocation(book.getImageUrl()),
                 book.isActive(),
                 book.getCreatedAt(),
                 book.getLastModifiedAt(),

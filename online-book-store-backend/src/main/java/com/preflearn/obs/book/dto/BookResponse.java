@@ -20,7 +20,7 @@ public record BookResponse(
 
         Integer stockQuantity,
 
-        String imageUrl,
+        byte[] imageUrl,
 
         boolean isActive,
 
