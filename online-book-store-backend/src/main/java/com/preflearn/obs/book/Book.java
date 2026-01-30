@@ -1,6 +1,8 @@
 package com.preflearn.obs.book;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.preflearn.obs.category.Category;
+import com.preflearn.obs.orderitem.OrderItem;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -57,4 +60,8 @@ public class Book {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "book")
+    @JsonIgnore
+    private List<OrderItem> orderItems;
 }

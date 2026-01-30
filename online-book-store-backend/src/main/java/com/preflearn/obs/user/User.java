@@ -1,5 +1,7 @@
 package com.preflearn.obs.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.preflearn.obs.order.Order;
 import jakarta.persistence.*;
 import lombok.*;
 import org.jspecify.annotations.NonNull;
@@ -14,6 +16,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -49,6 +52,10 @@ public class User implements UserDetails, Principal {
     private Role role;
 
     private boolean isActive;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Order> order;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
