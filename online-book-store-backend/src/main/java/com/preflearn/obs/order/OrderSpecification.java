@@ -10,7 +10,7 @@ public class OrderSpecification {
 
     public static Specification<Order> getAllOrdersByShippingStatus(Long userId, ShippingStatus shippingStatus) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.and(
-                criteriaBuilder.equal(root.get("userId"), userId),
+                criteriaBuilder.equal(root.get("user").get("id"), userId),
                 criteriaBuilder.equal(root.get("shippingStatus"), shippingStatus)
         );
     }
