@@ -3,6 +3,8 @@ package com.preflearn.obs.auth;
 import com.preflearn.obs.auth.dto.AuthenticationRequest;
 import com.preflearn.obs.auth.dto.AuthenticationResponse;
 import com.preflearn.obs.auth.dto.RegistrationRequest;
+import com.preflearn.obs.cart.Cart;
+import com.preflearn.obs.cart.CartRepository;
 import com.preflearn.obs.security.JwtAuthService;
 import com.preflearn.obs.user.Role;
 import com.preflearn.obs.user.User;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+import static com.preflearn.obs.cart.CartStatus.ACTIVE;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -25,6 +29,7 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final CartRepository cartRepository;
 
     public void registerUser(RegistrationRequest registrationRequest) {
         final User user = User.builder()
@@ -37,6 +42,11 @@ public class AuthenticationService {
                 .isActive(true)
                 .build();
         this.userRepository.save(user);
+        Cart cart = Cart.builder()
+                .user(user)
+                .status(ACTIVE)
+                .build();
+        this.cartRepository.save(cart);
     }
 
     public AuthenticationResponse loginUser(AuthenticationRequest authenticationRequest) {

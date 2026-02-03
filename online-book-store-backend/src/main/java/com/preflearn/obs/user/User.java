@@ -1,6 +1,7 @@
 package com.preflearn.obs.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.preflearn.obs.cart.Cart;
 import com.preflearn.obs.order.Order;
 import jakarta.persistence.*;
 import lombok.*;
@@ -56,6 +57,10 @@ public class User implements UserDetails, Principal {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Order> order;
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private Cart cart;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
